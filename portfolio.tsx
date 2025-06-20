@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
-import React from "react"
+import React from "react";
 
-import { useState, useEffect } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Badge } from "@/components/ui/badge"
+import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Badge } from "@/components/ui/badge";
 import {
   Code2,
   Smartphone,
@@ -31,100 +31,108 @@ import {
   Shield,
   Moon,
   Sun,
-} from "lucide-react"
+} from "lucide-react";
+
+import Logo from "@/public/logo_nexdevs.png";
+import Image from "next/image";
 
 // Hook personalizado para scroll reveal
 function useScrollReveal() {
-  const [visibleElements, setVisibleElements] = useState(new Set())
+  const [visibleElements, setVisibleElements] = useState(new Set());
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setVisibleElements((prev) => new Set([...prev, entry.target.id]))
+            setVisibleElements((prev) => new Set([...prev, entry.target.id]));
           }
-        })
+        });
       },
       {
         threshold: 0.1,
         rootMargin: "0px 0px -50px 0px",
-      },
-    )
+      }
+    );
 
-    const elements = document.querySelectorAll("[data-scroll-reveal]")
-    elements.forEach((el) => observer.observe(el))
+    const elements = document.querySelectorAll("[data-scroll-reveal]");
+    elements.forEach((el) => observer.observe(el));
 
-    return () => observer.disconnect()
-  }, [])
+    return () => observer.disconnect();
+  }, []);
 
-  return visibleElements
+  return visibleElements;
 }
 
 // Função para scroll suave
 const scrollToSection = (sectionId: string) => {
-  const element = document.getElementById(sectionId)
+  const element = document.getElementById(sectionId);
   if (element) {
-    const offsetTop = element.offsetTop - 80 // Ajuste para altura do header
+    const offsetTop = element.offsetTop - 80; // Ajuste para altura do header
     window.scrollTo({
       top: offsetTop,
       behavior: "smooth",
-    })
+    });
   }
-}
+};
 
 export default function Portfolio() {
-  const [darkMode, setDarkMode] = useState(false)
-  const [activeSection, setActiveSection] = useState(0)
-  const visibleElements = useScrollReveal() // Adicione esta linha
+  const [darkMode, setDarkMode] = useState(false);
+  const [activeSection, setActiveSection] = useState(0);
+  const visibleElements = useScrollReveal(); // Adicione esta linha
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = document.querySelectorAll("section")
-      const scrollPosition = window.scrollY + 100
+      const sections = document.querySelectorAll("section");
+      const scrollPosition = window.scrollY + 100;
 
       sections.forEach((section, index) => {
-        const sectionTop = section.offsetTop
-        const sectionHeight = section.offsetHeight
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.offsetHeight;
 
-        if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-          setActiveSection(index)
+        if (
+          scrollPosition >= sectionTop &&
+          scrollPosition < sectionTop + sectionHeight
+        ) {
+          setActiveSection(index);
         }
-      })
-    }
+      });
+    };
 
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const technologies = {
     frontend: [
-      { name: "React", level: 95 },
-      { name: "Next.js", level: 90 },
-      { name: "TypeScript", level: 88 },
-      { name: "Tailwind CSS", level: 92 },
-      { name: "Vue.js", level: 85 },
+      { name: "React" },
+      { name: "Next.js" },
+      { name: "TypeScript" },
+      { name: "Tailwind CSS" },
+      { name: "Vue.js" },
     ],
     backend: [
-      { name: "Node.js", level: 90 },
-      { name: "Laravel", level: 88 },
-      { name: "Python", level: 85 },
-      { name: "Express", level: 87 },
-      { name: "NestJS", level: 82 },
+      { name: "Node.js" },
+      { name: "Laravel" },
+      { name: "Python" },
+      { name: "Express" },
+      { name: "NestJS" },
     ],
     database: [
-      { name: "PostgreSQL", level: 90 },
-      { name: "MongoDB", level: 85 },
-      { name: "Prisma", level: 88 },
-      { name: "Redis", level: 80 },
-      { name: "Firebase", level: 85 },
+      { name: "PostgreSQL" },
+      { name: "MongoDB" },
+      { name: "Prisma" },
+      { name: "Redis" },
+      { name: "Firebase" },
+      { name: "SQL Server" },
     ],
-  }
+  };
 
   const projects = [
     {
       title: "Dashboard Analytics",
-      description: "Plataforma completa de análise de dados com visualizações interativas",
+      description:
+        "Plataforma completa de análise de dados com visualizações interativas",
       tech: ["React", "Node.js", "PostgreSQL"],
       image: "/placeholder.svg?height=200&width=300",
     },
@@ -146,68 +154,83 @@ export default function Portfolio() {
       tech: ["NestJS", "OpenAI", "Docker"],
       image: "/placeholder.svg?height=200&width=300",
     },
-  ]
+  ];
 
   return (
-    <div className={`min-h-screen transition-colors duration-300 ${darkMode ? "dark bg-gray-900" : "bg-white"}`}>
+    <div
+      className={`min-h-screen transition-colors duration-300 ${
+        darkMode ? "dark bg-gray-900" : "bg-white"
+      }`}
+    >
       <style jsx>{`
         .scroll-reveal {
           opacity: 0;
           transform: translateY(30px);
           transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
-        
+
         .scroll-reveal.fade-in {
           opacity: 0;
           transition: opacity 0.8s ease-out;
         }
-        
+
         .scroll-reveal.slide-up {
           opacity: 0;
           transform: translateY(50px);
           transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
-        
+
         .scroll-reveal.slide-left {
           opacity: 0;
           transform: translateX(-50px);
           transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
-        
+
         .scroll-reveal.slide-right {
           opacity: 0;
           transform: translateX(50px);
           transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
-        
+
         .scroll-reveal.zoom-in {
           opacity: 0;
           transform: scale(0.9);
           transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
-        
+
         .scroll-reveal.visible {
           opacity: 1;
           transform: translateY(0) translateX(0) scale(1);
         }
-        
-        .stagger-1 { transition-delay: 0.1s; }
-        .stagger-2 { transition-delay: 0.2s; }
-        .stagger-3 { transition-delay: 0.3s; }
-        .stagger-4 { transition-delay: 0.4s; }
-        .stagger-5 { transition-delay: 0.5s; }
-        .stagger-6 { transition-delay: 0.6s; }
+
+        .stagger-1 {
+          transition-delay: 0.1s;
+        }
+        .stagger-2 {
+          transition-delay: 0.2s;
+        }
+        .stagger-3 {
+          transition-delay: 0.3s;
+        }
+        .stagger-4 {
+          transition-delay: 0.4s;
+        }
+        .stagger-5 {
+          transition-delay: 0.5s;
+        }
+        .stagger-6 {
+          transition-delay: 0.6s;
+        }
       `}</style>
       {/* Navigation */}
       <nav className="fixed top-0 w-full z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-                <Code2 className="w-5 h-5 text-white" />
-              </div>
+              <Image src={Logo} alt="" className="rounded-full h-10 w-10" />
+
               <span className="font-bold text-xl bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                DevTeam
+                NexDevs
               </span>
             </div>
 
@@ -244,15 +267,27 @@ export default function Portfolio() {
               </button>
             </div>
 
-            <Button variant="ghost" size="icon" onClick={() => setDarkMode(!darkMode)} className="ml-4">
-              {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setDarkMode(!darkMode)}
+              className="ml-4"
+            >
+              {darkMode ? (
+                <Sun className="w-5 h-5 text-white" />
+              ) : (
+                <Moon className="w-5 h-5" />
+              )}
             </Button>
           </div>
         </div>
       </nav>
 
       {/* Hero Section */}
-      <section id="home" className="pt-16 min-h-screen flex items-center relative overflow-hidden">
+      <section
+        id="home"
+        className="pt-16 min-h-screen flex items-center relative overflow-hidden"
+      >
         <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-purple-50 to-cyan-50 dark:from-gray-900 dark:via-blue-900/20 dark:to-purple-900/20"></div>
 
         {/* Animated Background Elements */}
@@ -264,7 +299,9 @@ export default function Portfolio() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div
-              className={`space-y-8 scroll-reveal slide-left ${visibleElements.has("hero-content") ? "visible" : ""}`}
+              className={`space-y-8 scroll-reveal slide-left ${
+                visibleElements.has("hero-content") ? "visible" : ""
+              }`}
               data-scroll-reveal
               id="hero-content"
             >
@@ -286,15 +323,16 @@ export default function Portfolio() {
                   </span>
                 </h1>
                 <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl">
-                  Somos uma equipe jovem, colaborativa e experiente que cresceu junto. Desenvolvemos soluções full stack
-                  escaláveis com foco em performance, usabilidade e design refinado.
+                  Somos uma equipe jovem, colaborativa e experiente que cresceu
+                  junto. Desenvolvemos soluções full stack escaláveis com foco
+                  em performance, usabilidade e design refinado.
                 </p>
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button
                   size="lg"
-                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 group"
+                  className=" text-white border-0 group dark:text-white dark:bg-gray-800"
                 >
                   Conheça nosso trabalho
                   <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -302,7 +340,7 @@ export default function Portfolio() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="border-2 border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800"
+                  className="border-2 border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:text-white"
                 >
                   Fale com a gente
                 </Button>
@@ -310,22 +348,30 @@ export default function Portfolio() {
 
               <div className="flex items-center space-x-8 pt-8">
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-blue-600">50+</div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">Projetos</div>
+                  <div className="text-3xl font-bold text-blue-600">10+</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-400">
+                    Projetos
+                  </div>
                 </div>
                 <div className="text-center">
                   <div className="text-3xl font-bold text-purple-600">100%</div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">Satisfação</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-400">
+                    Satisfação
+                  </div>
                 </div>
                 <div className="text-center">
                   <div className="text-3xl font-bold text-cyan-600">24/7</div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">Suporte</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-400">
+                    Suporte
+                  </div>
                 </div>
               </div>
             </div>
 
             <div
-              className={`relative scroll-reveal slide-right ${visibleElements.has("hero-visual") ? "visible" : ""}`}
+              className={`relative scroll-reveal slide-right ${
+                visibleElements.has("hero-visual") ? "visible" : ""
+              }`}
               data-scroll-reveal
               id="hero-visual"
             >
@@ -354,7 +400,9 @@ export default function Portfolio() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2
-              className={`text-4xl font-bold mb-4 scroll-reveal fade-in ${visibleElements.has("about-title") ? "visible" : ""}`}
+              className={`text-4xl font-bold mb-4 scroll-reveal fade-in ${
+                visibleElements.has("about-title") ? "visible" : ""
+              }`}
               data-scroll-reveal
               id="about-title"
             >
@@ -363,17 +411,22 @@ export default function Portfolio() {
               </span>
             </h2>
             <p
-              className={`text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto scroll-reveal fade-in stagger-1 ${visibleElements.has("about-subtitle") ? "visible" : ""}`}
+              className={`text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto scroll-reveal fade-in stagger-1 ${
+                visibleElements.has("about-subtitle") ? "visible" : ""
+              }`}
               data-scroll-reveal
               id="about-subtitle"
             >
-              Uma equipe que começou unida, cresceu junto e hoje atua com maturidade e confiança
+              Uma equipe que começou unida, cresceu junto e hoje atua com
+              maturidade e confiança
             </p>
           </div>
 
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div
-              className={`space-y-8 scroll-reveal slide-left ${visibleElements.has("about-content") ? "visible" : ""}`}
+              className={`space-y-8 scroll-reveal slide-left ${
+                visibleElements.has("about-content") ? "visible" : ""
+              }`}
               data-scroll-reveal
               id="about-content"
             >
@@ -383,9 +436,12 @@ export default function Portfolio() {
                     <Users className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">Parceria Duradoura</h3>
+                    <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">
+                      Parceria Duradoura
+                    </h3>
                     <p className="text-gray-600 dark:text-gray-300">
-                      Construímos relacionamentos sólidos baseados na confiança mútua e crescimento conjunto.
+                      Construímos relacionamentos sólidos baseados na confiança
+                      mútua e crescimento conjunto.
                     </p>
                   </div>
                 </div>
@@ -395,9 +451,12 @@ export default function Portfolio() {
                     <Target className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">Comunicação Clara</h3>
+                    <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">
+                      Comunicação Clara
+                    </h3>
                     <p className="text-gray-600 dark:text-gray-300">
-                      Transparência total em cada etapa do projeto, mantendo você sempre informado.
+                      Transparência total em cada etapa do projeto, mantendo
+                      você sempre informado.
                     </p>
                   </div>
                 </div>
@@ -407,9 +466,12 @@ export default function Portfolio() {
                     <Clock className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">Compromisso com Prazos</h3>
+                    <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">
+                      Compromisso com Prazos
+                    </h3>
                     <p className="text-gray-600 dark:text-gray-300">
-                      Entregas pontuais e qualidade garantida em cada milestone do projeto.
+                      Entregas pontuais e qualidade garantida em cada milestone
+                      do projeto.
                     </p>
                   </div>
                 </div>
@@ -417,13 +479,17 @@ export default function Portfolio() {
             </div>
 
             <div
-              className={`relative scroll-reveal slide-right ${visibleElements.has("about-cards") ? "visible" : ""}`}
+              className={`relative scroll-reveal slide-right ${
+                visibleElements.has("about-cards") ? "visible" : ""
+              }`}
               data-scroll-reveal
               id="about-cards"
             >
               <div className="grid grid-cols-2 gap-4">
                 <Card
-                  className={`p-6 hover:shadow-lg transition-shadow scroll-reveal zoom-in stagger-1 ${visibleElements.has("about-card-1") ? "visible" : ""}`}
+                  className={`p-6 hover:shadow-lg transition-shadow scroll-reveal zoom-in stagger-1 ${
+                    visibleElements.has("about-card-1") ? "visible" : ""
+                  }`}
                   data-scroll-reveal
                   id="about-card-1"
                 >
@@ -431,13 +497,19 @@ export default function Portfolio() {
                     <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
                       <Star className="w-8 h-8 text-white" />
                     </div>
-                    <h4 className="font-semibold text-gray-900 dark:text-white">Excelência</h4>
-                    <p className="text-sm text-gray-600 dark:text-gray-300 mt-2">Código limpo e arquitetura sólida</p>
+                    <h4 className="font-semibold text-gray-900 dark:text-white">
+                      Excelência
+                    </h4>
+                    <p className="text-sm text-gray-600 dark:text-gray-300 mt-2">
+                      Código limpo e arquitetura sólida
+                    </p>
                   </CardContent>
                 </Card>
 
                 <Card
-                  className={`p-6 hover:shadow-lg transition-shadow mt-8 scroll-reveal zoom-in stagger-2 ${visibleElements.has("about-card-2") ? "visible" : ""}`}
+                  className={`p-6 hover:shadow-lg transition-shadow mt-8 scroll-reveal zoom-in stagger-2 ${
+                    visibleElements.has("about-card-2") ? "visible" : ""
+                  }`}
                   data-scroll-reveal
                   id="about-card-2"
                 >
@@ -445,13 +517,19 @@ export default function Portfolio() {
                     <div className="w-16 h-16 bg-gradient-to-r from-purple-600 to-cyan-600 rounded-full flex items-center justify-center mx-auto mb-4">
                       <Zap className="w-8 h-8 text-white" />
                     </div>
-                    <h4 className="font-semibold text-gray-900 dark:text-white">Performance</h4>
-                    <p className="text-sm text-gray-600 dark:text-gray-300 mt-2">Soluções otimizadas e escaláveis</p>
+                    <h4 className="font-semibold text-gray-900 dark:text-white">
+                      Performance
+                    </h4>
+                    <p className="text-sm text-gray-600 dark:text-gray-300 mt-2">
+                      Soluções otimizadas e escaláveis
+                    </p>
                   </CardContent>
                 </Card>
 
                 <Card
-                  className={`p-6 hover:shadow-lg transition-shadow scroll-reveal zoom-in stagger-3 ${visibleElements.has("about-card-3") ? "visible" : ""}`}
+                  className={`p-6 hover:shadow-lg transition-shadow scroll-reveal zoom-in stagger-3 ${
+                    visibleElements.has("about-card-3") ? "visible" : ""
+                  }`}
                   data-scroll-reveal
                   id="about-card-3"
                 >
@@ -459,13 +537,19 @@ export default function Portfolio() {
                     <div className="w-16 h-16 bg-gradient-to-r from-cyan-600 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
                       <Palette className="w-8 h-8 text-white" />
                     </div>
-                    <h4 className="font-semibold text-gray-900 dark:text-white">Design</h4>
-                    <p className="text-sm text-gray-600 dark:text-gray-300 mt-2">UX/UI refinado e intuitivo</p>
+                    <h4 className="font-semibold text-gray-900 dark:text-white">
+                      Design
+                    </h4>
+                    <p className="text-sm text-gray-600 dark:text-gray-300 mt-2">
+                      UX/UI refinado e intuitivo
+                    </p>
                   </CardContent>
                 </Card>
 
                 <Card
-                  className={`p-6 hover:shadow-lg transition-shadow mt-8 scroll-reveal zoom-in stagger-4 ${visibleElements.has("about-card-4") ? "visible" : ""}`}
+                  className={`p-6 hover:shadow-lg transition-shadow mt-8 scroll-reveal zoom-in stagger-4 ${
+                    visibleElements.has("about-card-4") ? "visible" : ""
+                  }`}
                   data-scroll-reveal
                   id="about-card-4"
                 >
@@ -473,8 +557,12 @@ export default function Portfolio() {
                     <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
                       <Rocket className="w-8 h-8 text-white" />
                     </div>
-                    <h4 className="font-semibold text-gray-900 dark:text-white">Inovação</h4>
-                    <p className="text-sm text-gray-600 dark:text-gray-300 mt-2">Tecnologias de ponta</p>
+                    <h4 className="font-semibold text-gray-900 dark:text-white">
+                      Inovação
+                    </h4>
+                    <p className="text-sm text-gray-600 dark:text-gray-300 mt-2">
+                      Tecnologias de ponta
+                    </p>
                   </CardContent>
                 </Card>
               </div>
@@ -488,7 +576,9 @@ export default function Portfolio() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2
-              className={`text-4xl font-bold mb-4 scroll-reveal fade-in ${visibleElements.has("services-title") ? "visible" : ""}`}
+              className={`text-4xl font-bold mb-4 scroll-reveal fade-in ${
+                visibleElements.has("services-title") ? "visible" : ""
+              }`}
               data-scroll-reveal
               id="services-title"
             >
@@ -497,7 +587,9 @@ export default function Portfolio() {
               </span>
             </h2>
             <p
-              className={`text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto scroll-reveal fade-in stagger-1 ${visibleElements.has("services-subtitle") ? "visible" : ""}`}
+              className={`text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto scroll-reveal fade-in stagger-1 ${
+                visibleElements.has("services-subtitle") ? "visible" : ""
+              }`}
               data-scroll-reveal
               id="services-subtitle"
             >
@@ -516,17 +608,24 @@ export default function Portfolio() {
             ].map((service, index) => (
               <Card
                 key={index}
-                className={`group hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border-0 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-700 scroll-reveal slide-up ${service.delay} ${visibleElements.has(`service-${index}`) ? "visible" : ""}`}
+                className={`group hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 border-0 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-700 scroll-reveal slide-up ${
+                  service.delay
+                } ${visibleElements.has(`service-${index}`) ? "visible" : ""}`}
                 data-scroll-reveal
                 id={`service-${index}`}
               >
                 <CardContent className="p-8">
                   <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                    {React.createElement(service.icon, { className: "w-8 h-8 text-white" })}
+                    {React.createElement(service.icon, {
+                      className: "w-8 h-8 text-white",
+                    })}
                   </div>
-                  <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">{service.title}</h3>
+                  <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">
+                    {service.title}
+                  </h3>
                   <p className="text-gray-600 dark:text-gray-300 mb-6">
-                    Aplicações web modernas, responsivas e performáticas usando as melhores tecnologias do mercado.
+                    Aplicações web modernas, responsivas e performáticas usando
+                    as melhores tecnologias do mercado.
                   </p>
                   <div className="flex flex-wrap gap-2">
                     <Badge variant="secondary">React</Badge>
@@ -545,7 +644,9 @@ export default function Portfolio() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2
-              className={`text-4xl font-bold mb-4 scroll-reveal fade-in ${visibleElements.has("tech-title") ? "visible" : ""}`}
+              className={`text-4xl font-bold mb-4 scroll-reveal fade-in ${
+                visibleElements.has("tech-title") ? "visible" : ""
+              }`}
               data-scroll-reveal
               id="tech-title"
             >
@@ -554,17 +655,22 @@ export default function Portfolio() {
               </span>
             </h2>
             <p
-              className={`text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto scroll-reveal fade-in stagger-1 ${visibleElements.has("tech-subtitle") ? "visible" : ""}`}
+              className={`text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto scroll-reveal fade-in stagger-1 ${
+                visibleElements.has("tech-subtitle") ? "visible" : ""
+              }`}
               data-scroll-reveal
               id="tech-subtitle"
             >
-              Stack moderno e ferramentas de ponta para entregar soluções de alta qualidade
+              Stack moderno e ferramentas de ponta para entregar soluções de
+              alta qualidade
             </p>
           </div>
 
           <div className="grid lg:grid-cols-3 gap-8">
             <Card
-              className={`p-8 hover:shadow-lg transition-shadow scroll-reveal slide-up stagger-1 ${visibleElements.has("tech-frontend") ? "visible" : ""}`}
+              className={`p-8 hover:shadow-lg transition-shadow scroll-reveal slide-up stagger-1 ${
+                visibleElements.has("tech-frontend") ? "visible" : ""
+              }`}
               data-scroll-reveal
               id="tech-frontend"
             >
@@ -573,21 +679,22 @@ export default function Portfolio() {
                   <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center mr-4">
                     <Monitor className="w-6 h-6 text-white" />
                   </div>
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white">Frontend</h3>
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+                    Frontend
+                  </h3>
                 </div>
-                <div className="space-y-4">
+                <div className="grid grid-cols-2 gap-3">
                   {technologies.frontend.map((tech, index) => (
-                    <div key={index} className="space-y-2">
-                      <div className="flex justify-between">
-                        <span className="text-gray-700 dark:text-gray-300">{tech.name}</span>
-                        <span className="text-blue-600 font-semibold">{tech.level}%</span>
+                    <div
+                      key={index}
+                      className="flex items-center space-x-3 p-3 rounded-lg bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 hover:shadow-md transition-all duration-300 group"
+                    >
+                      <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center flex-shrink-0">
+                        <Code2 className="w-4 h-4 text-white" />
                       </div>
-                      <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                        <div
-                          className="bg-gradient-to-r from-blue-600 to-purple-600 h-2 rounded-full transition-all duration-1000"
-                          style={{ width: `${tech.level}%` }}
-                        ></div>
-                      </div>
+                      <span className="text-sm font-medium text-gray-700 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                        {tech.name}
+                      </span>
                     </div>
                   ))}
                 </div>
@@ -595,7 +702,9 @@ export default function Portfolio() {
             </Card>
 
             <Card
-              className={`p-8 hover:shadow-lg transition-shadow scroll-reveal slide-up stagger-2 ${visibleElements.has("tech-backend") ? "visible" : ""}`}
+              className={`p-8 hover:shadow-lg transition-shadow scroll-reveal slide-up stagger-2 ${
+                visibleElements.has("tech-backend") ? "visible" : ""
+              }`}
               data-scroll-reveal
               id="tech-backend"
             >
@@ -604,21 +713,22 @@ export default function Portfolio() {
                   <div className="w-12 h-12 bg-gradient-to-r from-purple-600 to-cyan-600 rounded-lg flex items-center justify-center mr-4">
                     <Server className="w-6 h-6 text-white" />
                   </div>
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white">Backend</h3>
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+                    Backend
+                  </h3>
                 </div>
-                <div className="space-y-4">
+                <div className="grid grid-cols-2 gap-3">
                   {technologies.backend.map((tech, index) => (
-                    <div key={index} className="space-y-2">
-                      <div className="flex justify-between">
-                        <span className="text-gray-700 dark:text-gray-300">{tech.name}</span>
-                        <span className="text-purple-600 font-semibold">{tech.level}%</span>
+                    <div
+                      key={index}
+                      className="flex items-center space-x-3 p-3 rounded-lg bg-gradient-to-r from-purple-50 to-cyan-50 dark:from-purple-900/20 dark:to-cyan-900/20 hover:shadow-md transition-all duration-300 group"
+                    >
+                      <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-cyan-500 rounded-full flex items-center justify-center flex-shrink-0">
+                        <Server className="w-4 h-4 text-white" />
                       </div>
-                      <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                        <div
-                          className="bg-gradient-to-r from-purple-600 to-cyan-600 h-2 rounded-full transition-all duration-1000"
-                          style={{ width: `${tech.level}%` }}
-                        ></div>
-                      </div>
+                      <span className="text-sm font-medium text-gray-700 dark:text-gray-300 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+                        {tech.name}
+                      </span>
                     </div>
                   ))}
                 </div>
@@ -626,7 +736,9 @@ export default function Portfolio() {
             </Card>
 
             <Card
-              className={`p-8 hover:shadow-lg transition-shadow scroll-reveal slide-up stagger-3 ${visibleElements.has("tech-database") ? "visible" : ""}`}
+              className={`p-8 hover:shadow-lg transition-shadow scroll-reveal slide-up stagger-3 ${
+                visibleElements.has("tech-database") ? "visible" : ""
+              }`}
               data-scroll-reveal
               id="tech-database"
             >
@@ -635,21 +747,22 @@ export default function Portfolio() {
                   <div className="w-12 h-12 bg-gradient-to-r from-cyan-600 to-blue-600 rounded-lg flex items-center justify-center mr-4">
                     <Database className="w-6 h-6 text-white" />
                   </div>
-                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white">Database & Infra</h3>
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white">
+                    Database & Infra
+                  </h3>
                 </div>
-                <div className="space-y-4">
+                <div className="grid grid-cols-2 gap-3">
                   {technologies.database.map((tech, index) => (
-                    <div key={index} className="space-y-2">
-                      <div className="flex justify-between">
-                        <span className="text-gray-700 dark:text-gray-300">{tech.name}</span>
-                        <span className="text-cyan-600 font-semibold">{tech.level}%</span>
+                    <div
+                      key={index}
+                      className="flex items-center space-x-3 p-3 rounded-lg bg-gradient-to-r from-cyan-50 to-blue-50 dark:from-cyan-900/20 dark:to-blue-900/20 hover:shadow-md transition-all duration-300 group"
+                    >
+                      <div className="w-8 h-8 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
+                        <Database className="w-4 h-4 text-white" />
                       </div>
-                      <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                        <div
-                          className="bg-gradient-to-r from-cyan-600 to-blue-600 h-2 rounded-full transition-all duration-1000"
-                          style={{ width: `${tech.level}%` }}
-                        ></div>
-                      </div>
+                      <span className="text-sm font-medium text-gray-700 dark:text-gray-300 group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">
+                        {tech.name}
+                      </span>
                     </div>
                   ))}
                 </div>
@@ -664,7 +777,9 @@ export default function Portfolio() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2
-              className={`text-4xl font-bold mb-4 scroll-reveal fade-in ${visibleElements.has("projects-title") ? "visible" : ""}`}
+              className={`text-4xl font-bold mb-4 scroll-reveal fade-in ${
+                visibleElements.has("projects-title") ? "visible" : ""
+              }`}
               data-scroll-reveal
               id="projects-title"
             >
@@ -673,11 +788,14 @@ export default function Portfolio() {
               </span>
             </h2>
             <p
-              className={`text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto scroll-reveal fade-in stagger-1 ${visibleElements.has("projects-subtitle") ? "visible" : ""}`}
+              className={`text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto scroll-reveal fade-in stagger-1 ${
+                visibleElements.has("projects-subtitle") ? "visible" : ""
+              }`}
               data-scroll-reveal
               id="projects-subtitle"
             >
-              Showcase de soluções que desenvolvemos com paixão e expertise técnica
+              Showcase de soluções que desenvolvemos com paixão e expertise
+              técnica
             </p>
           </div>
 
@@ -685,7 +803,9 @@ export default function Portfolio() {
             {projects.map((project, index) => (
               <Card
                 key={index}
-                className={`group overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 scroll-reveal zoom-in ${index % 2 === 0 ? "stagger-1" : "stagger-2"} ${visibleElements.has(`project-${index}`) ? "visible" : ""}`}
+                className={`group overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 scroll-reveal zoom-in ${
+                  index % 2 === 0 ? "stagger-1" : "stagger-2"
+                } ${visibleElements.has(`project-${index}`) ? "visible" : ""}`}
                 data-scroll-reveal
                 id={`project-${index}`}
               >
@@ -697,14 +817,21 @@ export default function Portfolio() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   <div className="absolute bottom-4 left-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <Button size="sm" className="bg-white text-gray-900 hover:bg-gray-100">
+                    <Button
+                      size="sm"
+                      className="bg-white text-gray-900 hover:bg-gray-100"
+                    >
                       Ver Projeto <ExternalLink className="ml-2 w-4 h-4" />
                     </Button>
                   </div>
                 </div>
                 <CardContent className="p-6">
-                  <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">{project.title}</h3>
-                  <p className="text-gray-600 dark:text-gray-300 mb-4">{project.description}</p>
+                  <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">
+                    {project.title}
+                  </h3>
+                  <p className="text-gray-600 dark:text-gray-300 mb-4">
+                    {project.description}
+                  </p>
                   <div className="flex flex-wrap gap-2">
                     {project.tech.map((tech, techIndex) => (
                       <Badge key={techIndex} variant="secondary">
@@ -727,54 +854,72 @@ export default function Portfolio() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2
-              className={`text-4xl font-bold mb-4 scroll-reveal fade-in ${visibleElements.has("contact-title") ? "visible" : ""}`}
+              className={`text-4xl font-bold mb-4 scroll-reveal fade-in ${
+                visibleElements.has("contact-title") ? "visible" : ""
+              }`}
               data-scroll-reveal
               id="contact-title"
             >
-              <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              <span className="text-[#30354B] bg-clip-text text-transparent">
                 Vamos construir algo incrível juntos?
               </span>
             </h2>
             <p
-              className={`text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto scroll-reveal fade-in stagger-1 ${visibleElements.has("contact-subtitle") ? "visible" : ""}`}
+              className={`text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto scroll-reveal fade-in stagger-1 ${
+                visibleElements.has("contact-subtitle") ? "visible" : ""
+              }`}
               data-scroll-reveal
               id="contact-subtitle"
             >
-              Entre em contato e vamos transformar sua ideia em realidade digital
+              Entre em contato e vamos transformar sua ideia em realidade
+              digital
             </p>
           </div>
 
           <div className="grid lg:grid-cols-2 gap-12">
             <div
-              className={`space-y-8 scroll-reveal slide-left ${visibleElements.has("contact-form") ? "visible" : ""}`}
+              className={`space-y-8 scroll-reveal slide-left ${
+                visibleElements.has("contact-form") ? "visible" : ""
+              }`}
               data-scroll-reveal
               id="contact-form"
             >
               <Card className="p-8">
                 <CardContent className="p-0">
-                  <h3 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Envie uma mensagem</h3>
+                  <h3 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">
+                    Envie uma mensagem
+                  </h3>
                   <form className="space-y-6">
                     <div className="grid md:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nome</label>
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                          Nome
+                        </label>
                         <Input placeholder="Seu nome" />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email</label>
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                          Email
+                        </label>
                         <Input type="email" placeholder="seu@email.com" />
                       </div>
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Assunto</label>
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        Assunto
+                      </label>
                       <Input placeholder="Assunto da mensagem" />
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                         Mensagem
                       </label>
-                      <Textarea placeholder="Conte-nos sobre seu projeto..." rows={4} />
+                      <Textarea
+                        placeholder="Conte-nos sobre seu projeto..."
+                        rows={4}
+                      />
                     </div>
-                    <Button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white">
+                    <Button className="w-full bg-emerald-500 hover:bg-emerald-600 text-white">
                       Enviar Mensagem
                     </Button>
                   </form>
@@ -783,7 +928,9 @@ export default function Portfolio() {
             </div>
 
             <div
-              className={`space-y-8 scroll-reveal slide-right ${visibleElements.has("contact-info") ? "visible" : ""}`}
+              className={`space-y-8 scroll-reveal slide-right ${
+                visibleElements.has("contact-info") ? "visible" : ""
+              }`}
               data-scroll-reveal
               id="contact-info"
             >
@@ -793,8 +940,12 @@ export default function Portfolio() {
                     <Mail className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-gray-900 dark:text-white">Email</h4>
-                    <p className="text-gray-600 dark:text-gray-300">contato@devteam.com</p>
+                    <h4 className="font-semibold text-gray-900 dark:text-white">
+                      Email
+                    </h4>
+                    <p className="text-gray-600 dark:text-gray-300">
+                      nexdev.devs@gmail.com
+                    </p>
                   </div>
                 </div>
 
@@ -803,29 +954,29 @@ export default function Portfolio() {
                     <Github className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-gray-900 dark:text-white">GitHub</h4>
-                    <p className="text-gray-600 dark:text-gray-300">github.com/devteam</p>
-                  </div>
-                </div>
-
-                <div className="flex items-center space-x-4">
-                  <div className="w-12 h-12 bg-gradient-to-r from-cyan-600 to-blue-600 rounded-lg flex items-center justify-center">
-                    <Linkedin className="w-6 h-6 text-white" />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900 dark:text-white">LinkedIn</h4>
-                    <p className="text-gray-600 dark:text-gray-300">linkedin.com/company/devteam</p>
+                    <h4 className="font-semibold text-gray-900 dark:text-white">
+                      GitHub
+                    </h4>
+                    <p className="text-gray-600 dark:text-gray-300">
+                      github.com/NexDev-s
+                    </p>
                   </div>
                 </div>
               </div>
 
               <Card className="p-8 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
                 <CardContent className="p-0">
-                  <h3 className="text-2xl font-bold mb-4">Pronto para começar?</h3>
+                  <h3 className="text-2xl font-bold mb-4">
+                    Pronto para começar?
+                  </h3>
                   <p className="mb-6 opacity-90">
-                    Agende uma conversa gratuita e vamos discutir como podemos ajudar seu projeto a decolar.
+                    Agende uma conversa gratuita e vamos discutir como podemos
+                    ajudar seu projeto a decolar.
                   </p>
-                  <Button variant="secondary" className="bg-white text-gray-900 hover:bg-gray-100">
+                  <Button
+                    variant="secondary"
+                    className="bg-white text-gray-900 hover:bg-gray-100"
+                  >
                     Agendar Conversa
                   </Button>
                 </CardContent>
@@ -843,15 +994,17 @@ export default function Portfolio() {
               <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
                 <Code2 className="w-5 h-5 text-white" />
               </div>
-              <span className="font-bold text-xl">DevTeam</span>
+              <span className="font-bold text-xl">NexDevs</span>
             </div>
 
             <div className="text-center md:text-right">
-              <p className="text-gray-400">© 2024 DevTeam. Transformando ideias em soluções digitais.</p>
+              <p className="text-gray-400">
+                © 2025 NexDevs. Transformando ideias em soluções digitais.
+              </p>
             </div>
           </div>
         </div>
       </footer>
     </div>
-  )
+  );
 }
